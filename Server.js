@@ -1,13 +1,16 @@
 const express = require('express');
 const { ScrapingTable } = require('./functions/Scraping');
+const { AssetFilter } = require('./functions/Filters');
 
 const app = express();
 const port = 3000;
 
-app.get('/', async (req, res) => {
-  let teste = await ScrapingTable();
-  console.log(teste);
-  return res.json(teste);
+app.get('/calendar/:asset', async (req, res) => {
+  let param = req.params.asset;
+  let json = await ScrapingTable();
+  let jsonFiltered = AssetFilter(param, json);
+
+  return res.json(jsonFiltered);
 });
 
 app.listen(port, () => {
