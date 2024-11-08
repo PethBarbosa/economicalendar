@@ -9,8 +9,13 @@ app.get('/calendar/:asset', async (req, res) => {
   let param = req.params.asset;
   let json = await ScrapingTable();
   let jsonFiltered = AssetFilter(param, json);
-
   return res.json(jsonFiltered);
+});
+
+
+app.get('/calendar', async (req, res) => {
+  let json = await ScrapingTable();
+  return res.json(json);
 });
 
 app.listen(port, () => {

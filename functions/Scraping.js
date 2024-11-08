@@ -30,9 +30,9 @@ async function ScrapingTable() {
         let eventTime = $(item).find('td.first.left.time.js-time').text().trim();
         let eventImportanceLevel = $(item).find('td.left.textNum.sentiment.noWrap').prop('data-img_key'); // bull1, bull2, e bull3
         let eventAsset = $(item).find('td.left.flagCur.noWrap').text().trim();
-        let currentPrice = $(item).find('td.bold').text().trim();
-        let expectedPrice = $(item).find('td.fore').text().trim();
-        let previousPrice = $(item).find('td.prev').text().trim();
+        let current = $(item).find('td.bold').text().trim();
+        let expected = $(item).find('td.fore').text().trim();
+        let previous = $(item).find('td.prev').text().trim();
         
         let calendarEvent = {
             dateEvent : dateEventGlobal,
@@ -40,9 +40,9 @@ async function ScrapingTable() {
             eventTime: eventTime,
             eventImportanceLevel: eventImportanceLevel,
             eventAsset: eventAsset,
-            currentPrice: currentPrice,
-            expectedPrice: expectedPrice,
-            previousPrice: previousPrice
+            current: current,
+            expected: expected,
+            previous: previous
         }
 
         listEvents.push(calendarEvent);
