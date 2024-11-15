@@ -23,7 +23,7 @@ app.get('/calendar', async (req, res) => {
   let json = await ScrapingTable();
   return res.json(json);
 });
-  
+
 app.listen(port, () => {
   console.log(`Running Server http://localhost:${port}`);
 });
