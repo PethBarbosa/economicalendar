@@ -4,7 +4,7 @@ module.exports = { ScrapingTable };
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const url = 'https://br.investing.com/economic-calendar/';
 var listEvents = [];
-    
+
 async function ScrapingTable() {
 
     console.log('Starting script ...');
@@ -16,6 +16,17 @@ async function ScrapingTable() {
 
     const body =  await response.text();
     const $ = cheerio.load(body);
+    let clock = $('#currentTime').text();
+    let timezoneOffset = $('#timeZoneGmtOffsetFormatted').text();
+    
+    let utc = 
+    {
+        currentClock : clock,
+        gmt : timezoneOffset
+    };
+    
+    listEvents.push(utc);
+
     const line = $('#economicCalendarData tbody tr');
     var dateEventGlobal = '';
 

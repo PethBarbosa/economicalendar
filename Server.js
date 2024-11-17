@@ -6,22 +6,32 @@ const app = express();
 const port = 3000;
 
 app.get('/calendar/filters', async (req, res) => {
-  let { asset, eventDescription } = req.query;
-  let json = (await ScrapingTable()).listEvents;
-  let jsonFiltered = json;
-  
-  if (asset)
-    jsonFiltered = AssetFilter(asset, json);
+  try{
+    let { asset, eventDescription } = req.query;
+    let json = (await ScrapingTable()).listEvents;
+    let jsonFiltered = json;
+    
+    if (asset)
+      jsonFiltered = AssetFilter(asset, json);
 
-  if (eventDescription)
-    jsonFiltered = EventDescriptionFilter(eventDescription, jsonFiltered);
-  
-    return res.json(jsonFiltered);
+    if (eventDescription)
+      jsonFiltered = EventDescriptionFilter(eventDescription, jsonFiltered);
+    
+      return res.json(jsonFiltered);
+
+  }catch(error){
+      return res.json(error.message);
+  }
 });
 
 app.get('/calendar', async (req, res) => {
-  let json = await ScrapingTable();
-  return res.json(json);
+  try{
+      let json = await ScrapingTable();
+      return res.json(json);
+      
+    }catch(error){
+      return res.json(error.message);
+  }
 });
 
 app.listen(port, () => {
