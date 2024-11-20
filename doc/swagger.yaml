@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Calendário Econômico
+  version: 1.0.0
+  description: Obtenha os resultados das reuniões/eventos que movimentam os as cotações das moedas no mundo inteiro.
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /calendar:
+    get:
+      summary: Fetches all calendar events.
+      responses:
+        '200':
+          description: A list of calendar events.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  # Define the structure of the response based on your ScrapingTable function
+                  listEvents:
+                    type: array
+                    items:
+                      type: object
+                      # ... (define properties of each event)
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /calendar/filters:
+    get:
+      summary: Fetches filtered calendar events.
+      parameters:
+        - in: query
+          name: asset
+          schema:
+            type: string
+          description: Filter events by asset.
+        - in: query
+          name: eventDescription
+          schema:
+            type: string
+          description: Filter events by event description.
+      responses:
+        '200':
+          description: A list of filtered calendar events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  # ... (define properties of each event)
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: string

@@ -1,4 +1,6 @@
 const express = require('express');
+const swaggerJSDoc = require('./doc/swagerConfig');
+const swaggerUi = require('swagger-ui-express');
 const { ScrapingTable } = require('./functions/Scraping');
 const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
 
@@ -33,6 +35,8 @@ app.get('/calendar', async (req, res) => {
       return res.json(error.message);
   }
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
 
 app.listen(port, () => {
   console.log(`Running Server http://localhost:${port}`);
