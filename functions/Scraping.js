@@ -3,10 +3,10 @@ module.exports = { ScrapingTable };
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const url = 'https://br.investing.com/economic-calendar/';
-var listEvents = [];
 
 async function ScrapingTable() {
-
+    
+    let listEvents = [];
     console.log('Starting script ...');
 
     const response =  await fetch(url);
@@ -24,11 +24,9 @@ async function ScrapingTable() {
         currentClock : clock,
         gmt : timezoneOffset
     };
-    
-    listEvents.push(utc);
 
     const line = $('#economicCalendarData tbody tr');
-    var dateEventGlobal = '';
+    let dateEventGlobal = '';
 
     line.each((index, item) => {
         dateEvent = $(item).find('td.theDay').text().trim();
@@ -61,5 +59,5 @@ async function ScrapingTable() {
 
     console.log('Stopping script!');
 
-    return { listEvents };
+    return { utc, listEvents };
 }
