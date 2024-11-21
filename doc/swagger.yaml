@@ -2,45 +2,26 @@ openapi: 3.0.0
 info:
   title: Calendário Econômico
   version: 1.0.0
-  description: Obtenha os resultados das reuniões/eventos que movimentam os as cotações das moedas no mundo inteiro.
+  description: Obtenha os resultados das reuniões/eventos que movimentam as cotações das moedas no mundo inteiro.
 
 servers:
   - url: http://localhost:3000
 
+tags:
+  - name: Calendário
+
 paths:
   /calendar:
     get:
-      summary: Fetches all calendar events.
-      responses:
-        '200':
-          description: A list of calendar events.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  # Define the structure of the response based on your ScrapingTable function
-                  listEvents:
-                    type: array
-                    items:
-                      type: object
-                      # ... (define properties of each event)
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                type: string
-
-  /calendar/filters:
-    get:
+      tags: 
+        - Calendário
       summary: Fetches filtered calendar events.
       parameters:
         - in: query
           name: asset
           schema:
             type: string
-          description: Filter events by asset.
+          description: Filter events by asset. Ex:USD
         - in: query
           name: eventDescription
           schema:
@@ -52,10 +33,36 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  # ... (define properties of each event)
+                type: object
+                properties:
+                  utc:
+                    type: object
+                    properties:
+                      currentClock:
+                        type: string
+                      gmt:
+                        type: string
+                  listEvents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dateEvent:
+                          type: string
+                        eventTitle:
+                          type: string
+                        eventTime:
+                          type: string
+                        eventImportanceLevel:
+                          type: string
+                        eventAsset:
+                          type: string
+                        current:
+                          type: string
+                        expected:
+                          type: string
+                        previous:
+                          type: string
         '500':
           description: Server Error
           content:

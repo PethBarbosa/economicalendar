@@ -7,31 +7,23 @@ const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
 const app = express();
 const port = 3000;
 
-app.get('/calendar/filters', async (req, res) => {
-  try{
-    let { asset, eventDescription } = req.query;
-    let json = (await ScrapingTable()).listEvents;
-    let jsonFiltered = json;
-    
-    if (asset)
-      jsonFiltered = AssetFilter(asset, json);
-
-    if (eventDescription)
-      jsonFiltered = EventDescriptionFilter(eventDescription, jsonFiltered);
-    
-      return res.json(jsonFiltered);
-
-  }catch(error){
-      return res.json(error.message);
-  }
-});
-
 app.get('/calendar', async (req, res) => {
   try{
-      let json = await ScrapingTable();
-      return res.json(json);
-      
-    }catch(error){
+    let { asset, eventDescription } = req.query;
+    let events = (await ScrapingTable()).listEvents; 
+    let utc = (await ScrapingTable()).utc;
+    debugger;
+    let listEvents = events;
+    
+    if (asset)
+      listEvents = AssetFilter(asset, events);
+
+    if (eventDescription)
+      listEvents = EventDescriptionFilter(eventDescription, listEvents);
+    
+      return res.json({ utc, listEvents });
+
+  }catch(error){
       return res.json(error.message);
   }
 });
