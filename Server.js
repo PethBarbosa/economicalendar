@@ -1,8 +1,8 @@
-const express = require('express');
-const swaggerJSDoc = require('./doc/swagerConfig');
-const swaggerUi = require('swagger-ui-express');
-const { ScrapingTable } = require('./functions/Scraping');
-const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
+import express from 'express';
+import swaggerJSDoc from './doc/swagerConfig';
+import { serve, setup } from 'swagger-ui-express';
+import { ScrapingTable } from './functions/Scraping';
+import { AssetFilter, EventDescriptionFilter } from './functions/Filters';
 
 const app = express();
 const port = 3000;
@@ -28,9 +28,9 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
+app.use('/api-docs', serve, setup(swaggerJSDoc));
 
-module.exports = app;
+export default app;
 
 if (require.main === module) {
   app.listen(port, () => {
