@@ -3,8 +3,10 @@ const swaggerJSDoc = require('./doc/swagerConfig');
 const swaggerUi = require('swagger-ui-express');
 const { ScrapingTable } = require('./functions/Scraping');
 const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 app.get('/', async (req, res) => {

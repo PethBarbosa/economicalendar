@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 module.exports = { ScrapingTable };
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const url = 'https://br.investing.com/economic-calendar/';
 
 async function ScrapingTable() {
