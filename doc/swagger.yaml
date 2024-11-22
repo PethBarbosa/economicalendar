@@ -5,7 +5,7 @@ info:
   description: Obtenha os resultados das reuniões/eventos que movimentam as cotações das moedas no mundo inteiro.
 
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost
 
 tags:
   - name: Calendário
