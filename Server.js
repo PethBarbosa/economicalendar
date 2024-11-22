@@ -12,7 +12,6 @@ app.get('/calendar', async (req, res) => {
     let { asset, eventDescription } = req.query;
     let events = (await ScrapingTable()).listEvents; 
     let utc = (await ScrapingTable()).utc;
-    debugger;
     let listEvents = events;
     
     if (asset)
@@ -31,5 +30,5 @@ app.get('/calendar', async (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
 
 app.listen(port, () => {
-  console.log(`Running Server http://localhost:${port}`);
+  console.log(`Running Server http://localhost`);
 });
