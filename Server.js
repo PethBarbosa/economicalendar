@@ -7,6 +7,10 @@ const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
 const app = express();
 const port = 3000;
 
+app.get('/', async (req, res) => {
+  res.json({"retorno": "ok"});
+});
+
 app.get('/calendar', async (req, res) => {
   try{
     let { asset, eventDescription } = req.query;
