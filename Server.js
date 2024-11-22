@@ -9,6 +9,15 @@ const app = express();
 app.use(cors());
 const port = 3000;
 
+app.get('/test-scraping', async (req, res) => {
+  try {
+    const response = await fetch('https://br.investing.com/economic-calendar/');
+    return res.status(response.status).json({ status: response.status, statusText: response.statusText });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 app.get('/calendar', async (req, res) => {
   try {
     console.log('Request query:', req.query);
