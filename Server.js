@@ -9,10 +9,6 @@ const app = express();
 app.use(cors());
 const port = 3000;
 
-app.get('/', async (req, res) => {
-  res.json({"retorno": "ok"});
-});
-
 app.get('/calendar', async (req, res) => {
   try {
     console.log('Request query:', req.query);
