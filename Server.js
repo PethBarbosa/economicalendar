@@ -14,22 +14,31 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/calendar', async (req, res) => {
-  try{
+  try {
+    console.log('Request query:', req.query);
     let { asset, eventDescription } = req.query;
-    let events = (await ScrapingTable()).listEvents; 
-    let utc = (await ScrapingTable()).utc;
+
+    let scrapingResult = await ScrapingTable();
+    console.log('Scraping result:', scrapingResult);
+
+    let events = scrapingResult.listEvents;
+    let utc = scrapingResult.utc;
     let listEvents = events;
-    
-    if (asset)
+
+    if (asset) {
       listEvents = AssetFilter(asset, events);
+      console.log('Filtered by asset:', listEvents);
+    }
 
-    if (eventDescription)
+    if (eventDescription) {
       listEvents = EventDescriptionFilter(eventDescription, listEvents);
-    
-      return res.json({ utc, listEvents });
+      console.log('Filtered by eventDescription:', listEvents);
+    }
 
-  }catch(error){
-      return res.json(error.message);
+    return res.json({ utc, listEvents });
+  } catch (error) {
+    console.error('Error in /calendar:', error);
+    return res.status(500).json({ error: error.message });
   }
 });
 
