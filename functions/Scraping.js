@@ -1,5 +1,5 @@
-import { load } from 'cheerio';
-export default { ScrapingTable };
+const cheerio = require('cheerio');
+module.exports = { ScrapingTable };
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const url = 'https://br.investing.com/economic-calendar/';
@@ -15,7 +15,7 @@ async function ScrapingTable() {
         throw new Error(`Erro: ${response.statusText}`);
 
     const body =  await response.text();
-    const $ = load(body);
+    const $ = cheerio.load(body);
     let clock = $('#currentTime').text();
     let timezoneOffset = $('#timeZoneGmtOffsetFormatted').text();
     

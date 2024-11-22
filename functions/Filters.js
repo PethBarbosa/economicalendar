@@ -1,4 +1,4 @@
-export default { AssetFilter, EventDescriptionFilter};
+module.exports = { AssetFilter, EventDescriptionFilter};
 
 function AssetFilter(asset, listEvents)
 {
