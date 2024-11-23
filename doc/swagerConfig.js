@@ -1,4 +1,5 @@
 const swaggerJsDoc = require("swagger-jsdoc");
+require('dotenv').config();
 
 const swaggerOptions = {
   definition: {
@@ -10,7 +11,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000", // URL do seu servidor
+        url: process.env.NODE_ENV == 'Production' ? "https://economicalendar.vercel.app" : "http://localhost:3000", // URL do seu servidor
       },
     ],
   },
