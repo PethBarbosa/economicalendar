@@ -1,16 +1,18 @@
-# API CALENDÁRIO ECONÔMICO
+## API CALENDÁRIO ECONÔMICO
 
   
 
   
 
-##### Api desenvolvida para oferecer informações que são divulgadas diariamente sobre o calendário econômico. Balanços e resultados anuais ou mensais divulgados pelos eventos governamentais.
+##### Api desenvolvida para oferecer informações que são divulgadas diariamente sobre o calendário econômico. Taxa de desemprego e estoque de petróleo divulgados em tempo real pelo governo são exemplos do que se pode obter desta API
+
+Tome duas decições e programe suas automações.
 
   
 
   
 
-## Aviso !
+### Aviso !
 
 - São retornados apenas os eventos do dia atual;
 
@@ -20,7 +22,7 @@
 
   
 
-## Ambiente local
+### Ambiente local
 
   
 
@@ -46,20 +48,20 @@ npm  install
 
 ```javascript
 
-Node  Server.js
+node Server.js
 
 ```
 
-## Documentação
+### Documentação
 
 - Para utilizar a API online (hospedada) é possível utilizar a *[documentação no Swagger](https://economicalendar.site/api-docs/)*;
 
 
-## Exemplo de retorno
+### Exemplo de retorno
 ![](https://res.cloudinary.com/dszqs88zv/image/upload/fl_preserve_transparency/v1732386127/bodyreturn_lwxt4l.jpg?_s=public-apps)
 
   
 
-## Fluxo
+### Fluxo
 
 ![Fluxo](https://res.cloudinary.com/dszqs88zv/image/upload/fl_preserve_transparency/v1732386243/Fluxo_bcpji7.jpg?_s=public-apps)
