@@ -1,4 +1,4 @@
-## API CALENDÁRIO ECONÔMICO
+## FOREX - CALENDÁRIO ECONÔMICO
 
   
 Api desenvolvida para oferecer informações que são divulgadas diariamente sobre o calendário econômico. Taxa de desemprego e estoque de petróleo divulgados em tempo real pelo governo são exemplos do que se pode obter desta API
