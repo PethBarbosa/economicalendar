@@ -16,7 +16,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: [path.join(__dirname, "./doc/swagger.yaml")], // Caminho absoluto
+  apis: [ "./doc/swagger.yaml"], // Caminho absoluto
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

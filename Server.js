@@ -3,6 +3,7 @@ const swaggerJSDoc = require('./doc/swagerConfig');
 const swaggerUi = require('swagger-ui-express');
 const { ScrapingTable } = require('./functions/Scraping');
 const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -45,6 +46,7 @@ app.get('/calendar', async (req, res) => {
   }
 });
 
+app.use('/doc', express.static(path.join(__dirname, 'doc')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
 
 module.exports = app;
