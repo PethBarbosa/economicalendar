@@ -47,10 +47,6 @@ app.get('/calendar', async (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
 
-module.exports = app;
-
-if (require.main === module) {
-  app.listen(port, () => {
-    console.log(`Running Server https://localhost${port}`);
-  });
-}
+app.listen(port, () => {
+  console.log(`Running Server http://localhost:${port}`);
+});
