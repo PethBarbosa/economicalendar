@@ -5,7 +5,7 @@ let tls = process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 let keyScrapping = process.env.SCRAPER_API_KEY;
 let baseUrl = `https://api.scraperapi.com?api_key=${keyScrapping}&url=`;
 
-const url = `${process.env.NODE_ENV == 'prod' ? baseUrl : ""}https://br.investing.com/economic-calendar/`;
+const url = `${process.env.NODE_ENV == 'Production' ? baseUrl : ""}https://br.investing.com/economic-calendar/`;
 
 async function ScrapingTable() {
     
