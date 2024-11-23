@@ -51,6 +51,6 @@ module.exports = app;
 
 if (require.main === module) {
   app.listen(port, () => {
-    console.log(`Running Server https://localhost${port}`);
+    console.log(`Running Server https://localhost:${port}`);
   });
 }
