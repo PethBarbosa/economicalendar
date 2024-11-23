@@ -1,5 +1,6 @@
 const swaggerJsDoc = require("swagger-jsdoc");
 require('dotenv').config();
+const path = require('path');
 
 const swaggerOptions = {
   definition: {
@@ -15,7 +16,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./doc/swagger.yaml"], // Caminho para seus arquivos de rotas
+  apis: [path.join(__dirname, "./doc/swagger.yaml")], // Caminho absoluto
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

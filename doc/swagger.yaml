@@ -5,7 +5,7 @@ info:
   description: Obtenha os resultados das reuniões/eventos que movimentam as cotações das moedas no mundo inteiro.
 
 servers:
-  - url: http://localhost
+  - url: https://economicalendar.vercel.app
 
 tags:
   - name: Calendário
