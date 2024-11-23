@@ -12,7 +12,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV == 'Production' ? "https://economicalendar.vercel.app" : "http://localhost:3000", // URL do seu servidor
+        url: process.env.NODE_ENV == 'Production' ? "https://economicalendar.site" : "http://localhost:3000", // URL do seu servidor
       },
     ],
   },
