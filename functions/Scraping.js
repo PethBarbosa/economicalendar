@@ -1,95 +1,66 @@
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+module.exports = { ScrapingTable };
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Evitar rejeição de SSL para algumas conexões
+let tls = process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+let keyScrapping = process.env.SCRAPER_API_KEY;
+let baseUrl = `https://api.scraperapi.com?api_key=${keyScrapping}&url=`;
 
-const url = 'https://br.investing.com/economic-calendar/';
+const url = `${process.env.NODE_ENV == 'prod' ? baseUrl : ""}https://br.investing.com/economic-calendar/`;
 
 async function ScrapingTable() {
-  if (process.env.NODE_ENV === 'production') {
-    // Se estiver em produção (Vercel), usa Puppeteer
-    console.log('Executando com Puppeteer...');
-    return await scrapeWithPuppeteer();
-  } else {
-    // Se estiver em ambiente local, usa fetch + cheerio
-    console.log('Executando localmente com fetch...');
-    return await scrapeWithFetch();
-  }
-}
+    
+    let listEvents = [];
+    console.log('Starting script ...');
 
-// Função para scraping usando Puppeteer
-async function scrapeWithPuppeteer() {
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
+    const response =  await fetch(url);
 
-  await page.goto(url, {
-    waitUntil: 'load',
-    timeout: 0
-  });
+    if (!response.http_code == 200) 
+        throw new Error(`Erro: ${response.statusText}`);
 
-  const body = await page.content();
-  const $ = cheerio.load(body);
-  await browser.close();
-
-  return extractData($);
-}
-
-// Função para scraping usando fetch (em desenvolvimento)
-async function scrapeWithFetch() {
-  const response = await fetch(url);
-
-  if (!response.ok)
-    throw new Error(`Erro ao acessar a URL: ${response.statusText} (${response.status})`);
-
-  const body = await response.text();
-  const $ = cheerio.load(body);
-
-  return extractData($);
-}
-
-// Função comum para extrair os dados (UTC + lista de eventos)
-function extractData($) {
-  let listEvents = [];
-  let clock = $('#currentTime').text().trim();
-  let timezoneOffset = $('#timeZoneGmtOffsetFormatted').text().trim();
-  
-  let utc = {
-    currentClock: clock,
-    gmt: timezoneOffset
-  };
-
-  const line = $('#economicCalendarData tbody tr');
-  let dateEventGlobal = '';
-
-  line.each((index, item) => {
-    let dateEvent = $(item).find('td.theDay').text().trim();
-    dateEventGlobal = dateEvent ? dateEvent : dateEventGlobal;
-
-    if (dateEvent !== '') return true;
-
-    let eventTitle = $(item).find('td.left.event').text().trim();
-    let eventTime = $(item).find('td.first.left.time.js-time').text().trim();
-    let eventImportanceLevel = $(item).find('td.left.textNum.sentiment.noWrap').prop('data-img_key'); // bull1, bull2, e bull3
-    let eventAsset = $(item).find('td.left.flagCur.noWrap').text().trim();
-    let current = $(item).find('td.bold').text().trim();
-    let expected = $(item).find('td.fore').text().trim();
-    let previous = $(item).find('td.prev').text().trim();
-
-    let calendarEvent = {
-      dateEvent: dateEventGlobal,
-      eventTitle: eventTitle,
-      eventTime: eventTime,
-      eventImportanceLevel: eventImportanceLevel,
-      eventAsset: eventAsset,
-      current: current,
-      expected: expected,
-      previous: previous
+    const body =  await response.text();
+    const $ = cheerio.load(body);
+    let clock = $('#currentTime').text();
+    let timezoneOffset = $('#timeZoneGmtOffsetFormatted').text();
+    
+    let utc = 
+    {
+        currentClock : clock,
+        gmt : timezoneOffset
     };
 
-    listEvents.push(calendarEvent);
-  });
+    const line = $('#economicCalendarData tbody tr');
+    let dateEventGlobal = '';
 
-  return { utc, listEvents };
+    line.each((index, item) => {
+        dateEvent = $(item).find('td.theDay').text().trim();
+        dateEventGlobal = dateEvent ? dateEvent : dateEventGlobal;
+
+        if (dateEvent != '')
+            return true;
+
+        let eventTitle = $(item).find('td.left.event').text().trim();
+        let eventTime = $(item).find('td.first.left.time.js-time').text().trim();
+        let eventImportanceLevel = $(item).find('td.left.textNum.sentiment.noWrap').prop('data-img_key'); // bull1, bull2, e bull3
+        let eventAsset = $(item).find('td.left.flagCur.noWrap').text().trim();
+        let current = $(item).find('td.bold').text().trim();
+        let expected = $(item).find('td.fore').text().trim();
+        let previous = $(item).find('td.prev').text().trim();
+        
+        let calendarEvent = {
+            dateEvent : dateEventGlobal,
+            eventTitle: eventTitle,
+            eventTime: eventTime,
+            eventImportanceLevel: eventImportanceLevel,
+            eventAsset: eventAsset,
+            current: current,
+            expected: expected,
+            previous: previous
+        }
+
+        listEvents.push(calendarEvent);
+    });
+
+    console.log('Stopping script!');
+
+    return { utc, listEvents };
 }
-
-module.exports = { ScrapingTable };

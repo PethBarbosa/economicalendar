@@ -3,10 +3,8 @@ const swaggerJSDoc = require('./doc/swagerConfig');
 const swaggerUi = require('swagger-ui-express');
 const { ScrapingTable } = require('./functions/Scraping');
 const { AssetFilter, EventDescriptionFilter } = require('./functions/Filters');
-const cors = require('cors');
 
 const app = express();
-app.use(cors());
 const port = 3000;
 
 app.get('/test-scraping', async (req, res) => {
@@ -53,6 +51,6 @@ module.exports = app;
 
 if (require.main === module) {
   app.listen(port, () => {
-    console.log(`Running Server http://localhost${port}`);
+    console.log(`Running Server https://localhost${port}`);
   });
 }
