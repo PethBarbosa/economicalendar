@@ -46,6 +46,7 @@ app.get('/calendar', async (req, res) => {
   }
 });
 
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules', 'swagger-ui-dist')));
 app.use('/doc', express.static(path.join(__dirname, 'doc')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
 
