@@ -55,7 +55,7 @@ node Server.js
 
 
 ### Exemplo de retorno
-![](https://res.cloudinary.com/dszqs88zv/image/upload/fl_preserve_transparency/v1732386127/bodyreturn_lwxt4l.jpg?_s=public-apps)
+![](/doc/assets/doc_calendar_image.png)
 
   
 
