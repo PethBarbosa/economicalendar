@@ -7,7 +7,6 @@ Tome duas decisões e programe suas automações.
 
   
 
-  
 
 ### Aviso !
 
