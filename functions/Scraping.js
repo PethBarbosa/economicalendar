@@ -1,4 +1,6 @@
 const cheerio = require('cheerio');
+const { parse, format } = require('date-fns');
+const { ptBR } = require('date-fns/locale');
 module.exports = { ScrapingTable };
 require('dotenv').config();
 
@@ -7,6 +9,14 @@ let keyScrapping = process.env.SCRAPER_API_KEY;
 let baseUrl = `https://api.scraperapi.com?api_key=${keyScrapping}&url=`;
 
 const url = `${process.env.NODE_ENV == 'Production' ? baseUrl : ""}https://br.investing.com/economic-calendar/`;
+
+function DateFormat(dateEvent) {
+    if (!dateEvent) return null;
+
+    const parsedDate = parse(dateEvent, "EEEE, dd 'de' MMMM 'de' yyyy", new Date(), { locale: ptBR });
+
+    return format(parsedDate, 'dd/MM/yyyy');
+}
 
 async function ScrapingTable() {
     
@@ -47,8 +57,9 @@ async function ScrapingTable() {
         let expected = $(item).find('td.fore').text().trim();
         let previous = $(item).find('td.prev').text().trim();
         
+
         let calendarEvent = {
-            dateEvent : dateEventGlobal,
+            dateEvent : DateFormat(dateEventGlobal),
             eventTitle: eventTitle,
             eventTime: eventTime,
             eventImportanceLevel: eventImportanceLevel,
